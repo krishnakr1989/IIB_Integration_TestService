@@ -1,0 +1,23 @@
+
+
+CREATE COMPUTE MODULE HttpDBUpdate_MF_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		
+		DECLARE refInput REFERENCE TO InputRoot.XMLNSC.Employee;
+		DECLARE Source CHARACTER 'oODBC';
+		DECLARE Schema1 CHARACTER 'ODBUSER';
+		--PASSTHRU('INSERT INTO Database.oODBC.ODBUSER.Employee VALUES refInput.Name,refInput.Id,refInput.City');
+		
+		INSERT INTO Database.{Source}.{Schema1}.Employee (Name,Id,City)VALUES ('Ram',3,'Ayodhaya');
+		Declare sqlCd CHARACTER SQLCODE;
+		IF sqlCd=0 THEN
+			SET OutputRoot.XMLNSC.Result='Sucesssful Insertion';
+		ELSE
+			SET OutputRoot.XMLNSC.Result='NOT Sucesssful Insertion';
+		END IF;
+		RETURN TRUE;
+	END;
+
+END MODULE;
